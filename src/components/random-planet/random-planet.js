@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './random-planet.css';
-import SwapiService from '../../services/swapi-service';
+import SwapiService from '../services/swapi-service';
 import Spinner from '../spinner/spinner';
 import ErrorIndicator from '../error-indicator/error-indicator';
 
@@ -21,7 +21,7 @@ componentDidMount() {
 }
 
 componentWillUnmount() {
-    console.log('componentWillUnmount()')
+    clearInterval(this.interval);
 }
 
 onPlanetLoaded = (planet) => {
