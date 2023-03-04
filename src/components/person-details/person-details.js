@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import './person-details.css';
 
+import ErrorButton from '../error-button/error-button';
+import SwapiService from '../services/swapi-service';
+
 export default class PersonDetails extends Component {
+
+    swapiService = new SwapiService();
 
     state = {
         person: null
@@ -28,30 +33,29 @@ export default class PersonDetails extends Component {
     .getPerson(personId)
     .then((person) => {
         this.setState({ person });
-
     });
 }
 
     render() {
 
-        if (!this.state.person) {
-            return <span>Select a person from a list</span>
+        const { person } = this.state;
+        if (!person) {
+            return <span>Select a person from a List</span>
         }
-
-        const { person: {
-            id, name, gender, birthYear, eyeColor }} = this.state;
         
+        const {
+            id, name, gender, birthYear, eyeColor } = person;
 
         return (
             <div className="person-details card">
                 <img className="person-image"
-                src={`https://starwars-visualguide.com/#/characters/${id}.jpeg`}
+                src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
                 alt="character" />
 
-                <div className="card-boy">
-                    <h4>{name} {this.props.personId}</h4>
+                <div className="card-body">
+                    <h4>{name}</h4>
                     <ul className="list-group list-group-flush">
-                        <li className='list-group-item'>
+                        <li className="list-group-item">
                             <span className="term">Gender</span>
                             <span>{gender}</span>
                         </li>
@@ -64,8 +68,8 @@ export default class PersonDetails extends Component {
                             <span>{eyeColor}</span>
                         </li>
                     </ul>
+                    <ErrorButton />
                 </div>
-
             </div>
         )
     }
